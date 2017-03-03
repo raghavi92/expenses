@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 class Expense extends React.Component {
   componentDidMount() {
-    client('http://localhost:3000/category').then((response) => {
+    client('category').then((response) => {
       this.props.loadCategories(response.entity);
     })
   }
@@ -46,7 +46,7 @@ class Expense extends React.Component {
   }
   createExpense() {
     client({
-      path: 'http://localhost:3000/expense',
+      path: 'expense',
       entity: {...this.props.expense, date: new Date()}
     }).then((response) => {
       console.log(response);

@@ -1,4 +1,7 @@
 import rest from 'rest';
 import mime from 'rest/interceptor/mime';
-const client = rest.wrap(mime, {mime: 'application/json'});
+import pathPrefix from 'rest/interceptor/pathPrefix';
+
+const client = rest.wrap(pathPrefix, {prefix: 'http://localhost:3000'})
+  .wrap(mime, {mime: 'application/json'});
 export default client;
