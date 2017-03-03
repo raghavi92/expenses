@@ -1,0 +1,14 @@
+#app{
+  height: 100%;
+  width: 100%;
+  .container{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    position: absolute;
+    top: 25%;
+    .demo-card-square{
+      padding: 20px;
+    }
+  }
+}
