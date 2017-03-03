@@ -4,6 +4,7 @@ import client from '../client';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
+import Notifications, {notify} from 'react-notify-toast';
 
 const mapStateToProps = (state) => {
   return {
@@ -49,7 +50,9 @@ class Expense extends React.Component {
       path: 'expense',
       entity: {...this.props.expense, date: new Date()}
     }).then((response) => {
-      console.log(response);
+      notify.show("Success!","success");
+    }, (error) => {
+      notify.show(error.entity.message,"error");
     })
   }
   setFields(evt) {
@@ -61,6 +64,7 @@ class Expense extends React.Component {
     const self = this;
     return (
       <div className='container'>
+        <Notifications />
         <div className="demo-card-square mdl-card mdl-shadow--2dp">
           <div className="mdl-card__title">
             <h5 className="mdl-card__title-text">Record your expense</h5>
