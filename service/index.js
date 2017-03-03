@@ -1,17 +1,19 @@
 "use strict"
 var express = require('express')
 var app = express();
+var cors = require('cors');
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ExpenseModel = require('./models/expenseModel.js');
 const CategoryModel = require('./models/categoryModel.js');
+app.use(cors());
 app.use(bodyParser.json());
 
 app.route('/expense')
   .get((req, res) => {
     ExpenseModel.find().lean().exec((error, results) => {
       if(!error) {
-        res.send(results);
+        res.json(results);
       } else {
         res.status(500).send(results);
       }
@@ -32,7 +34,7 @@ app.route('/category')
   .get((req, res) => {
     CategoryModel.find().lean().exec((error, results) => {
       if(!error) {
-        res.send(results);
+        res.json(results);
       } else {
         res.status(500).send(results);
       }
