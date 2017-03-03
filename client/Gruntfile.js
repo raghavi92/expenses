@@ -4,7 +4,7 @@ module.exports = function (grunt)  {
 		browserify: {
 			options: {
 				debug: true,
-				transform: [['babelify',{presets: ['es2015','react']}]]
+				transform: [['babelify',{presets: ['es2015','react','stage-2']}]]
 			},
 			www: {
 				files: [{
@@ -19,7 +19,7 @@ module.exports = function (grunt)  {
 		copy: {
 			main: {
 				files: [
-					{expand: true, flatten: true, cwd:'app/', src: '**.min.css', dest: 'www/', filter: 'isFile'},
+					{expand: true, flatten: true, cwd:'app/', src: '**.css', dest: 'www/', filter: 'isFile'},
 					{src: 'app/index.html', dest: 'www/index.html'}
 				]
 			}
