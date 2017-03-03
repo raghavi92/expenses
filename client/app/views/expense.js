@@ -84,6 +84,11 @@ class Expense extends React.Component {
             name="form-field-name"
             options={self.getOptions.call(self)}
             onChange={self.setSelected.bind(self)} />
+          <div className="mdl-textfield mdl-js-textfield">
+            <textarea className="mdl-textfield__input" type="text" rows= "3" id="notes"
+            onChange={self.setFields.bind(self)} />
+            <label className="mdl-textfield__label" htmlFor="notes">Additional Notes</label>
+          </div>
           <div className="mdl-card__actions" onClick={self.createExpense.bind(self)}>
             <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
               Submit
