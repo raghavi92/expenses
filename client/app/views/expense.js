@@ -43,7 +43,7 @@ class Expense extends React.Component {
     });
   }
   setSelected(val) {
-    this.props.setSelectedCategory({categories: val});
+    this.props.setSelectedCategory({category_id: val});
   }
   createExpense() {
     client({
@@ -80,7 +80,7 @@ class Expense extends React.Component {
             <label className="mdl-textfield__label" htmlFor="amount">Amount</label>
           </div>
           <Creatable
-            value={this.props.expense.categories}
+            value={this.props.expense.category_id}
             placeholder="Select Categories"
             multi={true}
             simpleValue={true}
