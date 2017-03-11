@@ -14,4 +14,23 @@
   .toast-notification{
     width: 90% !important;
   }
+  .panel{
+    padding: 5px 5px;
+    .title {
+      width: 100%;
+      text-align: center;
+      div {
+        display: inline-block;
+        &:nth-child(1){
+          width: 10%;
+        }
+        &:nth-child(2){
+          width: 80%;
+        }
+        &:nth-child(3){
+          width: 10%;
+        }
+      }
+    }
+  }
 }
