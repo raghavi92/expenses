@@ -1,3 +1,4 @@
+import _ from 'lodash';
 const defaultState = {
   items: []
 }
@@ -5,7 +6,8 @@ const categories = (state = [], action) => {
   switch(action.type) {
     case 'LOAD_CATOGORIES':
       return {...state, items: action.categories };
-    break;
+    case 'ADD_CATEGORY':
+      return {...state, items: _.concat(state.items,action.category)};
   }
   return state;
 }

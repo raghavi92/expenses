@@ -19,6 +19,14 @@ const loadCategories = (categories) => {
     categories
   };
 }
+
+const addCategory = (category) => {
+  return {
+    type: 'ADD_CATEGORY',
+    category
+  };
+}
+
 const setSelectedCategory = (field) => {
   return {
     type: 'SET_CATEGORY',
@@ -26,7 +34,7 @@ const setSelectedCategory = (field) => {
   }
 }
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({loadCategories, setSelectedCategory}, dispatch);
+  return bindActionCreators({loadCategories, setSelectedCategory, addCategory}, dispatch);
 };
 class Expense extends React.Component {
   componentDidMount() {
@@ -34,16 +42,18 @@ class Expense extends React.Component {
       this.props.loadCategories(response.entity);
     })
   }
-  getOptions() {
-    return _.map(this.props.all_categories.items, (item) => {
-      return {
-        value: item._id,
-        label: item.name
-      };
-    });
-  }
   setSelected(val) {
     this.props.setSelectedCategory({category_id: val});
+  }
+  createNewCategory(category) {
+    const self = this;
+    client({
+      path: 'category',
+      entity: _.pick(category, 'name')
+    }).then((response) => {
+      self.props.addCategory(response.entity);
+      self.setSelected(_.join(_.concat(self.props.expense.category_id.split(','), response.entity._id), ","));
+    })
   }
   createExpense() {
     client({
@@ -80,13 +90,15 @@ class Expense extends React.Component {
             <label className="mdl-textfield__label" htmlFor="amount">Amount</label>
           </div>
           <Creatable
+            labelKey='name'
+            valueKey='_id'
             value={this.props.expense.category_id}
             placeholder="Select Categories"
             multi={true}
             simpleValue={true}
             className="mdl-textfield mdl-js-textfield"
-            name="form-field-name"
-            options={self.getOptions.call(self)}
+            options={self.props.all_categories.items}
+            onNewOptionClick={self.createNewCategory.bind(self)}
             onChange={self.setSelected.bind(self)} />
           <div className="mdl-textfield mdl-js-textfield">
             <textarea className="mdl-textfield__input" type="text" rows= "3" id="notes"

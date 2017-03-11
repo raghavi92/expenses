@@ -16,7 +16,7 @@ CategoryRoute.route('/')
   let category = new CategoryModel(req.body);
   category.save((err) => {
     if(!err) {
-      res.sendStatus(201);
+      res.status(201).json(category);
     } else {
       res.status(500).send(err);
     }
