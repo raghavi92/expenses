@@ -14,6 +14,35 @@ ExpenseRoute.use('/', (req, res, next) => {
 })
 ExpenseRoute.route('/')
 .get((req, res) => {
+  ExpenseModel.aggregate([{
+    $unwind: "$category_id"
+  }, {
+    $group: {
+      _id: "$category_id",
+      amount: {
+        $sum: "$amount"
+      }
+    }
+  }, {
+    $lookup: {
+      from: "categories",
+      localField: "_id",
+      foreignField: "_id",
+      as: "category"
+    }
+  }, {
+    $unwind: "$category"
+  }, {
+    $project: {
+      amount:1,
+      _id: 0,
+      categoryName: "$category.name"
+    }
+  }], function(err, result) {
+      debugger;
+    console.log(result)
+    console.log(err)
+  } );
   ExpenseModel.find().lean().exec((error, results) => {
     if(!error) {
       res.json(results);
@@ -36,5 +65,4 @@ ExpenseRoute.route('/')
     }
   });
 });
-
 module.exports = ExpenseRoute;
