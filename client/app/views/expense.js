@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import Notifications, {notify} from 'react-notify-toast';
+import {history} from '../index.js';
 
 const mapStateToProps = (state) => {
   return {
@@ -70,6 +71,9 @@ class Expense extends React.Component {
     field[evt.target.id] = evt.target.value;
     this.props.setSelectedCategory(field);
   }
+  goBack() {
+    history.goBack();
+  }
   render() {
     const self = this;
     return (
@@ -105,9 +109,12 @@ class Expense extends React.Component {
             onChange={self.setFields.bind(self)} />
             <label className="mdl-textfield__label" htmlFor="notes">Additional Notes</label>
           </div>
-          <div className="mdl-card__actions" onClick={self.createExpense.bind(self)}>
-            <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          <div className="mdl-card__actions" >
+            <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onClick={self.createExpense.bind(self)}>
               Submit
+            </a>
+            <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onClick={self.goBack.bind(self)}>
+              Cancel
             </a>
           </div>
         </div>

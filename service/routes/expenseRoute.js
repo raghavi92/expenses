@@ -39,7 +39,6 @@ ExpenseRoute.route('/')
       categoryName: "$category.name"
     }
   }], function(err, result) {
-      debugger;
     console.log(result)
     console.log(err)
   } );
