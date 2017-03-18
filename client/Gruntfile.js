@@ -3,6 +3,7 @@ module.exports = function (grunt)  {
 	grunt.initConfig({
 		browserify: {
 			options: {
+				watch: true,
 				debug: true,
 				transform: [['babelify',{presets: ['es2015','react','stage-2']}]]
 			},
@@ -28,10 +29,6 @@ module.exports = function (grunt)  {
 			html: {
 				files: ['app/index.html'],
 				tasks: ['copy']
-			},
-			js: {
-				files: ['app/**/*.{jsx,js}'],
-				tasks: ['browserify']
 			},
 			styles: {
 				files: ['app/styles/*.scss'],
