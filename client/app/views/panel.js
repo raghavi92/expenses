@@ -2,12 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 class Panel extends React.Component {
   render() {
-    const {title, children, id, active} = {...this.props};
-    const classes = classNames(
-      'panel', 'mdl-tabs__panel', {'is-active' : active
-    });
+    const {title, children, id} = {...this.props};
     return (
-      <div className={classes} id={id}>
+      <div className='panel mdl-tabs__panel' id={id}>
         <div className="title">
           <div>Prev</div>
           <div>{title}</div>

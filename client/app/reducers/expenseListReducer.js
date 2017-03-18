@@ -2,16 +2,16 @@ import moment from 'moment';
 const defaultState = {
   currentSelection: 'daily',
   daily: {
-    fromDate: moment(new Date()),
-    toDate: new Date()
+    fromDate: moment(),
+    toDate: moment()
   },
   weekly: {
-    fromDate: new Date(),
-    toDate: new Date()
+    fromDate: moment().subtract(1, "week"),
+    toDate: moment()
   },
   monthly: {
-    fromDate: new Date(),
-    toDate: new Date()
+    fromDate: moment().subtract(1, "month"),
+    toDate: moment()
   }
 }
 const expenseList = (state = defaultState, action) => {

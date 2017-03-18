@@ -24,27 +24,40 @@ class Dashboard extends React.Component {
         case 'daily':
           fromDate = expenseList.daily.fromDate;
           toDate = expenseList.daily.toDate;
+          break;
         case 'weekly':
           fromDate = expenseList.weekly.fromDate;
           toDate = expenseList.weekly.toDate;
+          break;
         case 'monthly':
           fromDate = expenseList.monthly.fromDate;
           toDate = expenseList.monthly.toDate;
+          break;
       }
-      client(`expense?groupBy=category&fromDate=${fromDate}&toDate=${toDate}`).then(response => {
-        //Todo: update state based on the response
+      client(`expense?groupBy=category&fromDate=${fromDate.toDate()}&toDate=${toDate.toDate()}`).then(response => {
+        console.log(response.entity);
       })
     }
     handleClick(interval) {
       this.props.setInterval(interval);
     }
     render() {
-      const {currentSelection} = {...this.props.expenseList};
+      const {currentSelection, daily, weekly, monthly} = {...this.props.expenseList};
       const getClasses = (interval) => {
         return classNames('tab', {
           'is-active': currentSelection === interval
         });
       };
+      const getTitle = () => {
+        switch(currentSelection) {
+          case 'daily':
+            return `${daily.fromDate.format("DD/MM/YYYY")} - ${daily.toDate.format("DD/MM/YYYY")}`;
+          case 'weekly':
+            return `${weekly.fromDate.format("DD/MM/YYYY")} - ${weekly.toDate.format("DD/MM/YYYY")}`;
+          case 'monthly':
+            return `${monthly.fromDate.format("DD/MM/YYYY")} - ${monthly.toDate.format("DD/MM/YYYY")}`;
+        }
+      }
       return (
         <div className="dashboard">
           <div className="tabs">
@@ -52,7 +65,7 @@ class Dashboard extends React.Component {
               <div onClick={this.handleClick.bind(this, 'weekly')} className={getClasses('weekly')}>Weekly</div>
               <div onClick={this.handleClick.bind(this, 'monthly')} className={getClasses('monthly')}>Monthly</div>
           </div>
-          <Panel title='12-12-2017' id="daily" active={currentSelection === 'daily'}>
+          <Panel title={getTitle()} id={currentSelection} active={currentSelection === 'daily'}>
           </Panel>
           <Link to="/expense">
             <button className="add-expense mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
