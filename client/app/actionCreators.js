@@ -4,4 +4,10 @@ const setInterval = (interval) => {
     interval
   };
 };
-export {setInterval};
+const navigateThroughDates = (duration) => {
+  return {
+    type: 'NAVIGATE_DATES',
+    duration
+  };
+}
+export {setInterval, navigateThroughDates};
