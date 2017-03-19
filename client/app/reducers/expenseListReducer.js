@@ -1,17 +1,16 @@
 import moment from 'moment';
+import CustomDate from '../utils/customDate';
+
 const defaultState = {
   currentSelection: 'daily',
   daily: {
-    fromDate: moment(),
-    toDate: moment()
+    dateRange: new CustomDate("daily")
   },
   weekly: {
-    fromDate: moment().subtract(1, "week"),
-    toDate: moment()
+    dateRange: new CustomDate("weekly")
   },
   monthly: {
-    fromDate: moment().subtract(1, "month"),
-    toDate: moment()
+    dateRange: new CustomDate("monthly")
   }
 }
 const expenseList = (state = defaultState, action) => {

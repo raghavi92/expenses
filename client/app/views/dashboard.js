@@ -22,19 +22,19 @@ class Dashboard extends React.Component {
       const expenseList = {...this.props.expenseList};
       switch(expenseList.currentSelection) {
         case 'daily':
-          fromDate = expenseList.daily.fromDate;
-          toDate = expenseList.daily.toDate;
+          fromDate = expenseList.daily.dateRange.getFromDateAsJSDate();
+          toDate = expenseList.daily.dateRange.getToDateAsJSDate();
           break;
         case 'weekly':
-          fromDate = expenseList.weekly.fromDate;
-          toDate = expenseList.weekly.toDate;
+          fromDate = expenseList.weekly.dateRange.getFromDateAsJSDate();
+          toDate = expenseList.weekly.dateRange.getFromDateAsJSDate();
           break;
         case 'monthly':
-          fromDate = expenseList.monthly.fromDate;
-          toDate = expenseList.monthly.toDate;
+          fromDate = expenseList.monthly.dateRange.getFromDateAsJSDate();
+          toDate = expenseList.monthly.dateRange.getFromDateAsJSDate();
           break;
       }
-      client(`expense?groupBy=category&fromDate=${fromDate.toDate()}&toDate=${toDate.toDate()}`).then(response => {
+      client(`expense?groupBy=category&fromDate=${fromDate}&toDate=${toDate}`).then(response => {
         console.log(response.entity);
       })
     }
@@ -51,11 +51,11 @@ class Dashboard extends React.Component {
       const getTitle = () => {
         switch(currentSelection) {
           case 'daily':
-            return `${daily.fromDate.format("DD/MM/YYYY")} - ${daily.toDate.format("DD/MM/YYYY")}`;
+            return daily.dateRange.getFriendlyDate();
           case 'weekly':
-            return `${weekly.fromDate.format("DD/MM/YYYY")} - ${weekly.toDate.format("DD/MM/YYYY")}`;
+            return weekly.dateRange.getFriendlyDate();
           case 'monthly':
-            return `${monthly.fromDate.format("DD/MM/YYYY")} - ${monthly.toDate.format("DD/MM/YYYY")}`;
+            return monthly.dateRange.getFriendlyDate();
         }
       }
       return (
