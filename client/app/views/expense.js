@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import Notifications, {notify} from 'react-notify-toast';
 import {history} from '../index.js';
-
+import moment from 'moment';
 const mapStateToProps = (state) => {
   return {
     all_categories: state.categories,
@@ -59,7 +59,7 @@ class Expense extends React.Component {
   createExpense() {
     client({
       path: 'expense',
-      entity: {...this.props.expense, date: new Date()}
+      entity: {...this.props.expense, date: moment().format("DD/MM/YYYY")}
     }).then((response) => {
       notify.show("Success!","success");
     }, (error) => {

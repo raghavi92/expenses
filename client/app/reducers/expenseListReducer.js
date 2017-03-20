@@ -34,7 +34,8 @@ const expenseList = (state = defaultState, action) => {
         newRange = state.monthlyRange.oneMonthForward();
         return {...state, monthlyRange: newRange};
       }
-
+    case 'SET_DATA':
+      return {...state, data: action.data};
     default:
     return state;
   }

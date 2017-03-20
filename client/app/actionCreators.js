@@ -10,4 +10,10 @@ const navigateThroughDates = (duration) => {
     duration
   };
 }
-export {setInterval, navigateThroughDates};
+const setData = (data) => {
+  return {
+    type: 'SET_DATA',
+    data
+  };
+};
+export {setInterval, navigateThroughDates, setData};

@@ -20,6 +20,14 @@ class CustomDate {
     }
   }
 
+  formattedFromDate() {
+    return formatDate(this.fromDate);
+  }
+  
+  formattedToDate() {
+    return formatDate(this.toDate);
+  }
+
   getFriendlyDate() {
     return `${formatDate(this.fromDate)} - ${formatDate(this.toDate)}`;
   }

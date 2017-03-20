@@ -3,12 +3,13 @@ const ExpenseRoute = express.Router();
 const ExpenseModel = require('../models/expenseModel.js');
 var mongoose = require('mongoose');
 var _ = require('lodash');
-// var id = mongoose.Types.ObjectId('4edd40c86762e0fb12000003');
+var moment = require('moment');
 ExpenseRoute.use('/', (req, res, next) => {
   if(req.method === 'POST' && req.body.category_id) {
     req.body.category_id = _.map(req.body.category_id.split(','), (category_id) => {
       return mongoose.Types.ObjectId(category_id);
     });
+    req.body.date = moment(req.body.date, "DD/MM/YYYY").toDate();
   }
   next();
 })
@@ -16,6 +17,13 @@ ExpenseRoute.route('/')
 .get((req, res) => {
   ExpenseModel.aggregate([{
     $unwind: "$category_id"
+  }, {
+    $match: {
+      date: {
+        $gte: moment(req.query.fromDate, "DD/MM/YYYY").toDate(),
+        $lte: moment(req.query.toDate, "DD/MM/YYYY").toDate()
+      }
+    }
   }, {
     $group: {
       _id: "$category_id",
@@ -39,14 +47,10 @@ ExpenseRoute.route('/')
       categoryName: "$category.name"
     }
   }], function(err, result) {
-    console.log(result)
-    console.log(err)
-  } );
-  ExpenseModel.find().lean().exec((error, results) => {
-    if(!error) {
-      res.json(results);
+    if(!err) {
+      res.json(result);
     } else {
-      res.status(500).send(results);
+      res.status(500).send(err);
     }
   });
 })
