@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   const getFromDate = () => {
     if(state.expenseList.currentSelection === 'daily') {
       return state.expenseList.dailyRange.formattedFromDate();
-    } else if(state.expenseList.currentSelection === 'monthly') {
+    } else if(state.expenseList.currentSelection === 'weekly') {
       return state.expenseList.weeklyRange.formattedFromDate();
     }
     return state.expenseList.monthlyRange.formattedFromDate();
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
   const getToDate = () => {
     if(state.expenseList.currentSelection === 'daily') {
       return state.expenseList.dailyRange.formattedToDate();
-    } else if(state.expenseList.currentSelection === 'monthly') {
+    } else if(state.expenseList.currentSelection === 'weekly') {
       return state.expenseList.weeklyRange.formattedToDate();
     }
     return state.expenseList.monthlyRange.formattedToDate();
